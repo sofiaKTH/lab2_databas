@@ -72,7 +72,7 @@ public class Booksdb implements DatabaseMethods{
      * @throws SQLException
      */
     @Override
-    public synchronized List<Book> searchByTitle(String search) throws SQLException {
+    public synchronized List<Book> searchByTitle(String search) {
         return null;
     }
 
@@ -81,10 +81,10 @@ public class Booksdb implements DatabaseMethods{
      *
      * @param search String of isbn
      * @return a list of books that matches the search
-     * @throws SQLException
+
      */
     @Override
-    public synchronized List<Book> searchByISBN(String search) throws SQLException {
+    public synchronized List<Book> searchByISBN(String search)  {
         return null;
     }
 
@@ -94,10 +94,10 @@ public class Booksdb implements DatabaseMethods{
      *
      * @param search the name of the author
      * @return a list of books that matches the search
-     * @throws SQLException
+
      */
     @Override
-    public synchronized List<Book> searchByAuthor(String search) throws SQLException {
+    public synchronized List<Book> searchByAuthor(String search)  {
         return null;
     }
 
@@ -105,20 +105,18 @@ public class Booksdb implements DatabaseMethods{
      * Adds a book to the database
      *
      * @param book the book to be added
-     * @throws SQLException
      */
     @Override
-    public boolean addBook(Book book) throws SQLException {
+    public boolean addBook(Book book){
         return true;
     }
 
     /**
      * Adds an author to an already exciting book
      * @param author the author to be added
-     * @throws SQLException
      */
     @Override
-    public boolean addAuthorToBook(Author author) throws SQLException  {
+    public boolean addAuthorToBook(Author author) {
         return true;
     }
 

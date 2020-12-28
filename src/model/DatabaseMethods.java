@@ -18,56 +18,55 @@ public interface DatabaseMethods {
      * @param database the name of the database to connect to
      * @return true on successful connection.
      */
-    public boolean connect(String database)throws SQLException;
+    public boolean connect(String database);
 
     /**
      * Disconnects from the database
      *
      * @return true if disconnected
-     * @throws SQLException
      */
-    public boolean disconnect()throws SQLException;
+    public boolean disconnect();
 
     /**
      * Searches the database for all books by a certain title
      *
      * @param search the title or substring of a title
      * @return the list of books which matches the search string
-     * @throws SQLException
+
      */
-    public List<Book> searchByTitle(String search)throws SQLException;
+    public List<Book> searchByTitle(String search);
 
     /**
      * Searches the database for all books by a certain ISBN
      *
      * @param search the ISBN, must be correct
      * @return
-     * @throws SQLException
+
      */
-    public List<Book> searchByISBN(String search)throws SQLException;
+    public List<Book> searchByISBN(String search);
 
     /**
      *  Searches the database for all books written by a certain author.
      *
      * @param search the name of the author
      * @return the list of books
-     * @throws SQLException
+
      */
-    public List<Book> searchByAuthor(String search)throws SQLException;
+    public List<Book> searchByAuthor(String search);
 
     /**
      * Adds book to collection in database
      *
      * @param book the book to be added
-     * @throws SQLException
+
      */
-    public boolean addBook(Book book) throws SQLException;
+    public boolean addBook(Book book) ;
 
     /**
      * Adds author to a specific book.
      *
      * @param author the author to be added
-     * @throws SQLException
+
      */
-    public boolean addAuthorToBook(Author author) throws SQLException;
+    public boolean addAuthorToBook(Author author);
 }
