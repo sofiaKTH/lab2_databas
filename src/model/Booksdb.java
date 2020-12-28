@@ -1,9 +1,14 @@
 package model;
 
+import com.mongodb.Block;
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.where;
 
 /**
  * The model facade which interacts with the controller and the rest if the classes in
@@ -15,6 +20,7 @@ public class Booksdb implements DatabaseMethods{
     private List<Book> books;
     //private Connection con;
     private MongoClient mongoCon;
+    private MongoDatabase db;
 
     public Booksdb(){
         books = new ArrayList<Book>();
@@ -32,7 +38,7 @@ public class Booksdb implements DatabaseMethods{
             return false;
         } else {
             mongoCon = new MongoClient( "localhost" , 27017 );
-            MongoDatabase db = mongoCon.getDatabase(database);
+            db = mongoCon.getDatabase(database);
         }
         return true;
     }
@@ -57,6 +63,17 @@ public class Booksdb implements DatabaseMethods{
      */
     @Override
     public synchronized List<Book> searchByTitle(String search) {
+
+        MongoCollection<Document> collection = db.getCollection("books");
+
+        Block<Document> printBlock = new Block<Document>() {
+            @Override
+            public void apply(final Document document) {
+                System.out.println(document.toJson());
+            }
+        };
+
+        collection.find(where(search));
         return null;
     }
 
@@ -92,6 +109,7 @@ public class Booksdb implements DatabaseMethods{
      */
     @Override
     public boolean addBook(Book book){
+
         return true;
     }
 

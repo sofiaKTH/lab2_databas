@@ -108,7 +108,7 @@ public class Controller {
      */
     public boolean onConnectSelected() {
         try {
-            if(booksDb.connect("bookdb")){
+            if(booksDb.connect("Booksdb")){
                 booksView.showAlertAndWait("Connected to database", CONFIRMATION);
                 return true;
             }
