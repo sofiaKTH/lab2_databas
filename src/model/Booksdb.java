@@ -25,7 +25,6 @@ public class Booksdb implements DatabaseMethods{
      *
      * @param database the name of the database to connect to
      * @return true if connection is established.
-     * @throws SQLException
      */
     @Override
     public boolean connect(String database) {
@@ -38,25 +37,11 @@ public class Booksdb implements DatabaseMethods{
         return true;
     }
 
-    /**
-     * Loads the driver so that communication with the server in SQL is possible
-     *
-     * @return true if load of JAR-file is successful
-     */
-    private boolean loadDriver(){
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        }catch (Exception e){
-            return false;
-        }
-        return true;
-    };
 
     /**
      * Effectively disconnects from the database
      *
      * @return true if successful
-     * @throws SQLException
      */
     @Override
     public boolean disconnect() {
@@ -69,7 +54,6 @@ public class Booksdb implements DatabaseMethods{
      *
      * @param search String of title
      * @return a list of books that matches the serach
-     * @throws SQLException
      */
     @Override
     public synchronized List<Book> searchByTitle(String search) {
