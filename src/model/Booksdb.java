@@ -2,6 +2,8 @@ package model;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,6 @@ public class Booksdb implements DatabaseMethods{
      *
      * @param database the name of the database to connect to
      * @return true if connection is established.
-     * @throws SQLException
      */
     @Override
     public boolean connect(String database) {
@@ -56,7 +57,6 @@ public class Booksdb implements DatabaseMethods{
      * Effectively disconnects from the database
      *
      * @return true if successful
-     * @throws SQLException
      */
     @Override
     public boolean disconnect() {
@@ -69,7 +69,6 @@ public class Booksdb implements DatabaseMethods{
      *
      * @param search String of title
      * @return a list of books that matches the serach
-     * @throws SQLException
      */
     @Override
     public synchronized List<Book> searchByTitle(String search) {
@@ -108,6 +107,8 @@ public class Booksdb implements DatabaseMethods{
      */
     @Override
     public boolean addBook(Book book){
+        Document doc = bookToDoc(book);
+        System.out.println(doc);
         return true;
     }
 
@@ -119,6 +120,26 @@ public class Booksdb implements DatabaseMethods{
     public boolean addAuthorToBook(Author author) {
         return true;
     }
+
+    @Override
+    public Document bookToDoc(Book book) {
+        Document doc = new Document("isbn",book.getIsbn()).append("title",book.getTitle())
+                .append("genre",book.getGenre()).append("rating",book.getRating());
+        return doc;
+    }
+
+    @Override
+    public Document authorToDoc(Author author) {
+        Document doc = new Document("name",author.getName()).append("dateOfBirth",author.getDateOfBirth());
+        return doc;
+    }
+
+    @Override
+    public Book docToBook(Document doc) {
+        Book book = new Book(doc.getString("isbn"),doc.getString("title"),Genre.valueOf(doc.getString("genre")),doc.getInteger("rating"));
+        return null;
+    }
+
 
     @Override
     public String toString() {

@@ -2,6 +2,8 @@ package model;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+
 import java.util.List;
 
 /**
@@ -69,4 +71,8 @@ public interface DatabaseMethods {
 
      */
     public boolean addAuthorToBook(Author author);
+
+    public Document bookToDoc(Book book);
+    public Document authorToDoc(Author author);
+    public Book docToBook(Document doc);
 }
