@@ -137,7 +137,7 @@ public class Booksdb implements DatabaseMethods{
     @Override
     public Book docToBook(Document doc) {
         Book book = new Book(doc.getString("isbn"),doc.getString("title"),Genre.valueOf(doc.getString("genre")),doc.getInteger("rating"));
-        return null;
+        return book;
     }
 
 
