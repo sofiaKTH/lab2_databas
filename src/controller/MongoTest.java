@@ -28,7 +28,7 @@ class MongoTest {
        // System.out.println("Credentials ::"+ credential);
 
         //Creating a collection
-        database.createCollection("books");
+        //database.createCollection("books");
         MongoCollection collection = database.getCollection("books");
 
         System.out.println("Collection created successfully");

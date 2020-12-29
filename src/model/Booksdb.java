@@ -2,13 +2,15 @@ package model;
 
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.where;
+import static com.mongodb.client.model.Filters.*;
 
 /**
  * The model facade which interacts with the controller and the rest if the classes in
@@ -21,6 +23,7 @@ public class Booksdb implements DatabaseMethods{
     //private Connection con;
     private MongoClient mongoCon;
     private MongoDatabase db;
+    private final String dbCollection = "books";
 
     public Booksdb(){
         books = new ArrayList<Book>();
@@ -64,17 +67,18 @@ public class Booksdb implements DatabaseMethods{
     @Override
     public synchronized List<Book> searchByTitle(String search) {
 
-        MongoCollection<Document> collection = db.getCollection("books");
-
-        Block<Document> printBlock = new Block<Document>() {
-            @Override
-            public void apply(final Document document) {
-                System.out.println(document.toJson());
+        MongoCollection<Document> collection = db.getCollection(dbCollection);
+        List<Book> list = new ArrayList<>();
+        MongoCursor<Document> cursor = collection.find(regex("title", search)).iterator();
+        try {
+            while (cursor.hasNext()) {
+               // System.out.println(cursor.next());
+                list.add(docToBook((Document.parse(cursor.next().toJson()))));
             }
-        };
-
-        collection.find(where(search));
-        return null;
+        } finally {
+            cursor.close();
+        }
+        return list;
     }
 
     /**
@@ -108,8 +112,21 @@ public class Booksdb implements DatabaseMethods{
      * @param book the book to be added
      */
     @Override
-    public boolean addBook(Book book){
+    public boolean addBook(Book book) throws MongoException {
+        MongoCollection collection = db.getCollection(dbCollection);
         Document doc = bookToDoc(book);
+        System.out.println(doc);
+        try {
+            System.out.println("QUE?");
+            collection.insertOne(doc);
+            System.out.println("back");
+        } catch (Exception mongoException) {
+            System.out.println("mongo exception är: ");
+            System.out.println(mongoException);
+            throw mongoException;
+        }
+
+
         System.out.println(doc);
         return true;
     }
@@ -125,8 +142,10 @@ public class Booksdb implements DatabaseMethods{
 
     @Override
     public Document bookToDoc(Book book) {
+        System.out.println(book);
         Document doc = new Document("isbn",book.getIsbn()).append("title",book.getTitle())
-                .append("genre",book.getGenre()).append("rating",book.getRating());
+                .append("genre",book.getGenre().toString()).append("rating",book.getRating());
+        System.out.println(doc);
         return doc;
     }
 
@@ -138,8 +157,8 @@ public class Booksdb implements DatabaseMethods{
 
     @Override
     public Book docToBook(Document doc) {
-        Book book = new Book(doc.getString("isbn"),doc.getString("title"),Genre.valueOf(doc.getString("genre")),doc.getInteger("rating"));
-        return null;
+        Book book = new Book(doc.getString("isbn"),doc.getString("title"),Genre.valueOf(doc.getString("genre").toUpperCase()),doc.getInteger("rating"));
+        return book;
     }
 
 
