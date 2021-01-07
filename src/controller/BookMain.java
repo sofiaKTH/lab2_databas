@@ -2,6 +2,7 @@ package controller;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import model.Booksdb;
 import view.BooksView;
@@ -18,6 +19,7 @@ public class BookMain extends Application {
         primaryStage.setOnCloseRequest(event -> {
             try {
                 model.disconnect();
+                root.showAlertAndWait("Disconnected", Alert.AlertType.CONFIRMATION);
             } catch (Exception e) {}
         });
 

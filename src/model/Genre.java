@@ -5,5 +5,4 @@ package model;
  */
 public enum Genre {
     COMEDY, ROMANCE, HORROR, BIOGRAPHY, CRIME;
-
 }

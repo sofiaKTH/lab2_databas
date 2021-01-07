@@ -2,7 +2,6 @@ package model;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.StringProperty;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -21,6 +20,15 @@ public class Book {
     private static final Pattern ISBN_PATTERN =
             Pattern.compile("^\\d{9}[\\d|X]$");
 
+    /**
+     * Constructor.
+     *
+     * @param isbn
+     * @param title
+     * @param genre
+     * @param rating
+     * @throws IllegalArgumentException
+     */
     public Book(String isbn,String title, Genre genre, int rating)throws IllegalArgumentException{
         this.title = title;
         if(isValidIsbn(isbn)){
@@ -45,7 +53,7 @@ public class Book {
     /**
      * Adds an author to the list
      *
-     * @param author the author to be addded
+     * @param author the author to be added
      */
     public void addAuthor (Author author) {
         authors.add(author);

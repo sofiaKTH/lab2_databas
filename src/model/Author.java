@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Representation of a book
+ * Representation of a author
  *
  * @author sofia och micke
  */
@@ -35,8 +35,8 @@ public class Author {
         return name;
     }
 
-    public List<String> getIsbn() {
-        return isbn;
+    public String getIsbn() {
+        return isbn.get(0);
     }
 
     public String getDateOfBirth() {

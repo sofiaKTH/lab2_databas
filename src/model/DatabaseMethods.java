@@ -1,9 +1,6 @@
 package model;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-
 import java.util.List;
 
 /**
@@ -43,7 +40,6 @@ public interface DatabaseMethods {
      *
      * @param search the ISBN, must be correct
      * @return
-
      */
     public List<Book> searchByISBN(String search);
 
@@ -52,7 +48,6 @@ public interface DatabaseMethods {
      *
      * @param search the name of the author
      * @return the list of books
-
      */
     public List<Book> searchByAuthor(String search);
 
@@ -60,7 +55,6 @@ public interface DatabaseMethods {
      * Adds book to collection in database
      *
      * @param book the book to be added
-
      */
     public boolean addBook(Book book) ;
 
@@ -68,11 +62,28 @@ public interface DatabaseMethods {
      * Adds author to a specific book.
      *
      * @param author the author to be added
-
      */
     public boolean addAuthorToBook(Author author);
 
+    /**
+     * Converts a Book object to a Document object.
+     *
+     * @param book
+     * @return
+     */
     public Document bookToDoc(Book book);
+    /**
+     * Converts an Author object to a Document object.
+     *
+     * @param author
+     * @return
+     */
     public Document authorToDoc(Author author);
+    /**
+     * Converts a Document object to a Book object.
+     *
+     * @param doc
+     * @return
+     */
     public Book docToBook(Document doc);
 }
